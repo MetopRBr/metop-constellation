@@ -1,0 +1,41 @@
+name: Update Metop Diagram
+
+on:
+  # Run daily at 10:00 UTC — after EUMETSAT typically publishes (~07:00-09:00 UTC)
+  schedule:
+    - cron: '0 10 * * *'
+  # Also allow manual trigger from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch latest TLEs and update diagram
+        run: python3 update_diagram.py
+
+      - name: Commit and push if diagram changed
+        run: |
+          git config user.name  "TLE Bot"
+          git config user.email "tle-bot@users.noreply.github.com"
+          git add metop_constellation_v3.html
+          # Only commit if the file actually changed
+          if git diff --cached --quiet; then
+            echo "No changes to diagram — TLEs unchanged since last run."
+          else
+            DATE=$(date -u +"%Y-%m-%d")
+            git commit -m "Auto-update Metop diagram TLEs ${DATE}"
+            git push
+          fi
