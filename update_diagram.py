@@ -224,7 +224,7 @@ def patch_html(html, elems, results):
 
     html = re.sub(
         r'(// ── Metop-B at )[\d.]+°( ahead of Metop-C \(TLE-derived, )\S+(\) ─+\n'
-        r'  // Phase angle from TLEs: B is )[\d.]+°( CCW ahead of C \(at 6 o\'clock\)\n'
+        r'  // Phase angle from TLEs: B is )[\d.]+° CCW ahead of C \(at 6 o\'clock\)\n'
         r'  // Parametric angle on ellipse: [^\n]+\n'
         r'  // Image rotation: [^\n]+\n'
         r'  ctx\.save\(\);\n'
@@ -264,7 +264,7 @@ def patch_html(html, elems, results):
     sg_behind  = 360.0 - sg_phase
 
     html = re.sub(
-        r'(// ── Metop-SGA1 — EUMETSAT TLE \()\S+(\) ─+\n'
+        r'(// ── Metop-SGA1 — EUMETSAT TLE \()\S+\) ─+\n'
         r'  // TLE epoch [^\n]+\n'
         r'  // SGA1 AoL [^\n]+\n'
         r'  // Phase: [^\n]+\n'
