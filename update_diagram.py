@@ -224,7 +224,7 @@ def patch_html(html, elems, results):
 
     html = re.sub(
         r'(// ── Metop-B at )[\d.]+°( ahead of Metop-C \(TLE-derived, )\S+(\) ─+\n'
-        r'  // Phase angle from TLEs: B is )[\d.]+° CCW ahead of C \(at 6 o\'clock\)\n'
+        r'  // Phase angle from TLEs: B is )[\d.]+°( CCW ahead of C \(at 6 o\'clock\)\n'
         r'  // Parametric angle on ellipse: [^\n]+\n'
         r'  // Image rotation: [^\n]+\n'
         r'  ctx\.save\(\);\n'
@@ -264,7 +264,7 @@ def patch_html(html, elems, results):
     sg_behind  = 360.0 - sg_phase
 
     html = re.sub(
-        r'(// ── Metop-SGA1 — EUMETSAT TLE \()\S+\) ─+\n'
+        r'(// ── Metop-SGA1 — EUMETSAT TLE \()\S+(\) ─+\n'
         r'  // TLE epoch [^\n]+\n'
         r'  // SGA1 AoL [^\n]+\n'
         r'  // Phase: [^\n]+\n'
@@ -291,7 +291,30 @@ def patch_html(html, elems, results):
         html
     )
 
-    # 5. Arc angle labels
+    # 5. Metop-SGA1 label box and text — always below the thumbnail
+    sg_thumb_bottom = sg_y + 45          # thumbnail half-height = 45px
+    sg_box_top  = sg_thumb_bottom + 25   # 25px gap below thumbnail
+    sg_box_w    = 122
+    sg_box_x    = sg_x - sg_box_w / 2
+    sg_text_cx  = sg_x
+    sg_line1_y  = sg_box_top + 14
+    sg_line2_y  = sg_box_top + 28
+
+    html = re.sub(
+        r"  roundRect\(ctx,[\d.-]+,[\d.-]+,122,34,4,'rgba\(26,42,26,0\.85\)'\);\n"
+        r"  ctx\.fillStyle='#a5d6a7'; ctx\.font='bold 11px sans-serif'; ctx\.textAlign='center';\n"
+        r"  ctx\.fillText\('Metop-SGA1',[\d.-]+,[\d.-]+\);\n"
+        r"  ctx\.fillStyle='#81c784'; ctx\.font='11px sans-serif';\n"
+        r"  ctx\.fillText\('2nd gen · Drifting to lead',[\d.-]+,[\d.-]+\);",
+        f"  roundRect(ctx,{sg_box_x:.0f},{sg_box_top:.0f},122,34,4,'rgba(26,42,26,0.85)');\n"
+        f"  ctx.fillStyle='#a5d6a7'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';\n"
+        f"  ctx.fillText('Metop-SGA1',{sg_text_cx:.0f},{sg_line1_y:.0f});\n"
+        f"  ctx.fillStyle='#81c784'; ctx.font='11px sans-serif';\n"
+        f"  ctx.fillText('2nd gen · Drifting to lead',{sg_text_cx:.0f},{sg_line2_y:.0f});",
+        html
+    )
+
+    # 6. Arc angle labels
     html = re.sub(
         r"ctx\.fillText\('Metop-B to C: [\d.]+°', 543, 577\);",
         f"ctx.fillText('Metop-B to C: {b_phase:.1f}°', 543, 577);",
