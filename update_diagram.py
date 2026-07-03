@@ -223,16 +223,16 @@ def patch_html(html, elems, results):
     b_phase    = results['B']['phase']
 
     html = re.sub(
-        r'(// ── Metop-B at )[\d.]+°( ahead of Metop-C \(TLE-derived, )\S+(\) ─+\n'
-        r'  // Phase angle from TLEs: B is )[\d.]+°( CCW ahead of C \(at 6 o\'clock\)\n'
-        r'  // Parametric angle on ellipse: [^\n]+\n'
-        r'  // Image rotation: [^\n]+\n'
-        r'  ctx\.save\(\);\n'
-        r'  ctx\.translate\([^)]+\);\n'
-        r'  ctx\.rotate\([^)]+\);\n'
-        r'  ctx\.drawImage\(imgBC,[^)]+\);\n'
-        r'  ctx\.restore\(\);\n'
-        r'  // Arrow in direction of travel[^\n]+\n'
+        r'  // ── Metop-B at [^\n]* ────────\r?\n'
+        r'  // Phase angle from TLEs: [^\n]*\r?\n'
+        r'  // Parametric angle on ellipse: [^\n]*\r?\n'
+        r'  // Image rotation: [^\n]*\r?\n'
+        r'  ctx\.save\(\);\r?\n'
+        r'  ctx\.translate\([^)]+\);\r?\n'
+        r'  ctx\.rotate\([^)]+\);\r?\n'
+        r'  ctx\.drawImage\(imgBC,[^)]+\);\r?\n'
+        r'  ctx\.restore\(\);\r?\n'
+        r'  // Arrow in direction of travel[^\n]*\r?\n'
         r'  arrow\(ctx,[^)]+\);',
         f"""// ── Metop-B at {b_phase:.2f}° ahead of Metop-C (TLE-derived, {epoch_to_date(b['epoch'])}) ────────
   // Phase angle from TLEs: B is {b_phase:.2f}° CCW ahead of C (at 6 o'clock)
@@ -264,17 +264,17 @@ def patch_html(html, elems, results):
     sg_behind  = 360.0 - sg_phase
 
     html = re.sub(
-        r'(// ── Metop-SGA1 — EUMETSAT TLE \()\S+(\) ─+\n'
-        r'  // TLE epoch [^\n]+\n'
-        r'  // SGA1 AoL [^\n]+\n'
-        r'  // Phase: [^\n]+\n'
-        r'  // Canvas position: [^\n]+\n'
-        r'  ctx\.save\(\);\n'
-        r'  ctx\.translate\([^)]+\);\n'
-        r'  ctx\.rotate\([^)]+\);\n'
-        r'  ctx\.drawImage\(imgSGA1,[^)]+\);\n'
-        r'  ctx\.restore\(\);\n'
-        r'  // Arrow in direction of travel[^\n]+\n'
+        r'  // ── Metop-SGA1 — EUMETSAT TLE [^\n]* ─+\r?\n'
+        r'  // TLE epoch [^\n]*\r?\n'
+        r'  // SGA1 AoL [^\n]*\r?\n'
+        r'  // Phase: [^\n]*\r?\n'
+        r'  // Canvas position: [^\n]*\r?\n'
+        r'  ctx\.save\(\);\r?\n'
+        r'  ctx\.translate\([^)]+\);\r?\n'
+        r'  ctx\.rotate\([^)]+\);\r?\n'
+        r'  ctx\.drawImage\(imgSGA1,[^)]+\);\r?\n'
+        r'  ctx\.restore\(\);\r?\n'
+        r'  // Arrow in direction of travel[^\n]*\r?\n'
         r'  arrow\(ctx,[^)]+\);',
         f"""// ── Metop-SGA1 — EUMETSAT TLE ({epoch_to_date(sg['epoch'])}) ─────────────────────────────
   // TLE epoch {sg['epoch']}, propagated to common epoch {b['epoch']}
