@@ -19,9 +19,9 @@ const imgBC     = new Image();
 const imgRadome = new Image();
 let loaded = 0;
 // -- TLE epochs (yyddd.fraction) -- update these when new TLEs are loaded
-const TLE_EPOCH_B    = 26185.2939761;  // Metop-B   (EUMETSAT)
-const TLE_EPOCH_C    = 26185.25194144;  // Metop-C   (EUMETSAT)
-const TLE_EPOCH_SGA1 = 26185.0;  // Metop-SGA1 (EUMETSAT)
+const TLE_EPOCH_B    = 26186.29385664;  // Metop-B   (EUMETSAT)
+const TLE_EPOCH_C    = 26186.25199404;  // Metop-C   (EUMETSAT)
+const TLE_EPOCH_SGA1 = 26186.0;  // Metop-SGA1 (EUMETSAT)
 
 // Convert TLE epoch (yyddd.fraction) to DD/MM/YYYY string
 function tleEpochToDate(epoch) {
@@ -171,9 +171,9 @@ function draw() {
   // Arc labels — positioned outside ellipse at arc midpoints
   // B–C midpoint at ~46.9° → label at (543, 580)
   ctx.fillStyle='#ff9800'; ctx.font='11px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Metop-B to C: 93.5°', 543, 577);
+  ctx.fillText('Metop-B to C: 93.2°', 543, 577);
   // C–SGA1 midpoint at ~134.2° → label moved up to clear Key legend box
-  ctx.fillText('Metop-C to SGA1: 110.3°', 153, 548);
+  ctx.fillText('Metop-C to SGA1: 116.4°', 153, 548);
 
 
 // ── Metop-SGA1 — EUMETSAT TLE (03/07/2026) ─────────────────────────────
@@ -213,7 +213,7 @@ function draw() {
   ctx.fillStyle='#64b5f6'; ctx.font='11px sans-serif';
   ctx.fillText('Prime',671,390);
   ctx.fillStyle='#90caf9'; ctx.font='10px sans-serif';
-  ctx.fillText('LTAN 20:52',671,403);
+  ctx.fillText('LTAN 20:51',671,403);
 
   // ── Metop-C at 6 o'clock (350,615) ──────────────────────
   // BC image 150x92, rotate 180°, horiz 275–425, vert 569–661
