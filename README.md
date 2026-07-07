@@ -128,9 +128,9 @@ cached results rather than the latest published TLEs.
 
 ---
 
-## Future change — 15 July (SGA1 manoeuvre)
+## Future change — 14 July (Metop-SGA1 manoeuvre)
 
 When Metop-SG A1 reaches its stable lead position at 12 o'clock:
-- SGA1 label: change "Drifting to lead" → "Lead position"
-- C–SGA1 arc: reposition to reflect ~180° stable separation
+- Metop-C to SGA1 arc: reposition to reflect ~180° stable separation
+- C–SGA1 arc: Metop-SGB1 will drift into position between these two satellites
 - Arc colours: consider making all three arcs orange (stable constellation)
