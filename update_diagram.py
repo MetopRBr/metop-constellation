@@ -244,6 +244,53 @@ def patch_html(html, elems, results):
         html
     )
 
+    # 7. Background orbit arc sweep angles.
+    #    Three arcs, anchored at Metop-C's fixed parametric position (pi/2),
+    #    measured cumulatively CCW: C->SGA1 (orange), SGA1->B (grey,
+    #    unoccupied), B->C (orange, wraps back past 360 deg to close the
+    #    circle). orbitArc() itself handles any sweep size generically, so
+    #    no topological "which side of 270 deg" branching is needed here.
+    sga1_from_c     = (360.0 - sg_phase) % 360.0
+    b_from_c        = (360.0 - b_phase) % 360.0
+    sga1_to_b_sweep = (b_from_c - sga1_from_c) % 360.0
+    arc_total = sga1_from_c + sga1_to_b_sweep + b_phase
+
+    # Safety check: this model assumes SGA1 always sits between C and B
+    # when travelling CCW (i.e. b_from_c > sga1_from_c). If SGA1's continued
+    # drift ever flips that ordering, the three sweeps stop summing to 360
+    # and the arcs would render incorrectly. Rather than silently draw a
+    # broken diagram, skip this patch and warn loudly so a human can look
+    # at it — the previous day's (still-valid) arcs stay in place.
+    if abs(arc_total - 360.0) > 0.5:
+        print(
+            f"  WARNING: orbit arc sweep angles do not sum to 360 "
+            f"(got {arc_total:.2f}). SGA1/B ordering assumption may have "
+            f"flipped — skipping arc update this run, please review manually.",
+            file=sys.stderr
+        )
+        return html
+
+    c_rad    = math.pi / 2
+    sga1_rad = c_rad + math.radians(sga1_from_c)
+    b_rad    = sga1_rad + math.radians(sga1_to_b_sweep)
+
+    sga1_deg = math.degrees(sga1_rad)
+    b_deg    = math.degrees(b_rad)
+
+    html = re.sub(
+        r'  // ── Orbit arcs \(auto-computed from cumulative phase angle from Metop-C\) ──\n'
+        r'  // C→SGA1: [\d.]+° \| SGA1→B \(grey, unoccupied\): [\d.]+° \| B→C: [\d.]+°\n'
+        r"  orbitArc\(Math\.PI/2, \([\d.]+ \* Math\.PI / 180\), 'rgba\(255,152,0,0\.65\)', \[3,3\]\);\n"
+        r"  orbitArc\(\([\d.]+ \* Math\.PI / 180\), \([\d.]+ \* Math\.PI / 180\), 'rgba\(102,102,102,0\.18\)', \[3,5\]\);\n"
+        r"  orbitArc\(\([\d.]+ \* Math\.PI / 180\), Math\.PI\*2 \+ Math\.PI/2, 'rgba\(255,152,0,0\.65\)', \[3,3\]\);",
+        "  // ── Orbit arcs (auto-computed from cumulative phase angle from Metop-C) ──\n"
+        f"  // C→SGA1: {sga1_from_c:.2f}° | SGA1→B (grey, unoccupied): {sga1_to_b_sweep:.2f}° | B→C: {b_phase:.2f}°\n"
+        f"  orbitArc(Math.PI/2, ({sga1_deg:.2f} * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);\n"
+        f"  orbitArc(({sga1_deg:.2f} * Math.PI / 180), ({b_deg:.2f} * Math.PI / 180), 'rgba(102,102,102,0.18)', [3,5]);\n"
+        f"  orbitArc(({b_deg:.2f} * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);",
+        html
+    )
+
     return html
 
 def main():
