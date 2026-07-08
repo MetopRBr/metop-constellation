@@ -3,7 +3,7 @@ name: Update Metop Diagram
 on:
   # Run daily before 10:00 UTC — after EUMETSAT typically publishes (~07:00-09:00 UTC)
   schedule:
-  - cron: '17 09 * * *'
+  - cron: '17 08 * * *'
   # Also allow manual trigger from the GitHub Actions tab
   workflow_dispatch:
 
