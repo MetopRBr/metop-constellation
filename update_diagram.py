@@ -156,7 +156,7 @@ def patch_html(html, elems, results):
         r'  ctx\.restore\(\);\r?\n'
         r'  // Arrow in direction of travel[^\n]*\r?\n'
         r'  arrow\(ctx,[^)]+\);',
-        f"""// ── Metop-B at {b_phase:.2f}° ahead of Metop-C (TLE-derived, {epoch_to_date(b['epoch'])}) ────────
+        f"""  // ── Metop-B at {b_phase:.2f}° ahead of Metop-C (TLE-derived, {epoch_to_date(b['epoch'])}) ────────
   // Phase angle from TLEs: B is {b_phase:.2f}° CCW ahead of C (at 6 o'clock)
   // Parametric angle on ellipse: {math.degrees(results['B']['angle']):.2f}° → canvas position (~{b_x:.0f}, {b_y:.0f})
   // Image rotation: π/2 + angle = {b_rot:.4f} rad ({math.degrees(b_rot):.2f}°)
@@ -196,7 +196,7 @@ def patch_html(html, elems, results):
         r'  ctx\.restore\(\);\r?\n'
         r'  // Arrow in direction of travel[^\n]*\r?\n'
         r'  arrow\(ctx,[^)]+\);',
-        f"""// ── Metop-SGA1 — EUMETSAT TLE ({epoch_to_date(sg['epoch'])}) ─────────────────────────────
+        f"""  // ── Metop-SGA1 — EUMETSAT TLE ({epoch_to_date(sg['epoch'])}) ─────────────────────────────
   // TLE epoch {sg['epoch']}, propagated to common epoch {b['epoch']}
   // SGA1 AoL {results['SGA1']['aol']:.2f}deg, Metop-C AoL {results['C']['aol']:.2f}deg
   // Phase: {sg_phase:.2f}deg CCW ahead of Metop-C (= {sg_behind:.2f}deg behind C), drifting toward lead
