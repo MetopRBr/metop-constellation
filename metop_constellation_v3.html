@@ -172,18 +172,17 @@ function draw() {
   ctx.fillText('Metop-C → SGA1: 140.8°', 153, 548);
 
 
-// ── Metop-SGA1 — EUMETSAT TLE (08/07/2026) ─────────────────────────────
-  // TLE epoch 26189.0, propagated to common epoch 26189.29384435
-  // SGA1 AoL 66.18deg, Metop-C AoL 200.91deg
-  // Phase: 225.27deg CCW ahead of Metop-C (= 134.73deg behind C), drifting toward lead
-  // Canvas position: (179.5, 189.1), rotation: -0.7901 rad (-45.27deg)
+  // ── Metop-SGA1 — EUMETSAT TLE (09/07/2026) ─────────────────────────────
+  // TLE epoch 26190.0, propagated to common epoch 26190.29390701
+  // Phase: 219.16deg CCW ahead of Metop-C (= 140.84deg behind C), drifting toward lead
+  // Canvas position: (198.4, 171.2), rotation: -0.6835 rad (-39.16deg)
   ctx.save();
-  ctx.translate(179.5, 189.1);
-  ctx.rotate(-0.7901);
+  ctx.translate(198.4, 171.2);
+  ctx.rotate(-0.6835);
   ctx.drawImage(imgSGA1,-75,-45,150,91);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,158.4,210.4,142.9,226.0,'#e53935');
+  arrow(ctx,175.2,190.1,158.1,204.0,'#e53935');
 
   roundRect(ctx,137,241,122,34,4,'rgba(26,42,26,0.85)');
   ctx.fillStyle='#a5d6a7'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
@@ -191,17 +190,16 @@ function draw() {
   ctx.fillStyle='#81c784'; ctx.font='11px sans-serif';
   ctx.fillText('2nd gen · Commissioning',198,269);
 
-// ── Metop-B at 92.46° ahead of Metop-C (TLE-derived, 08/07/2026) ────────
-  // Phase angle from TLEs: B is 92.46° CCW ahead of C (at 6 o'clock)
-  // Parametric angle on ellipse: -2.46° → canvas position (~590, 354)
-  // Image rotation: π/2 + angle = 1.5279 rad (87.54°)
+  // ── Metop-B at 92.19° ahead of Metop-C (TLE-derived, 09/07/2026) ────────
+  // Parametric angle on ellipse: -2.19° → canvas position (~590, 355)
+  // Image rotation: π/2 + angle = 1.5326 rad (87.81°)
   ctx.save();
-  ctx.translate(589.8,354.3);
-  ctx.rotate(1.5279);
+  ctx.translate(589.8,355.4);
+  ctx.rotate(1.5326);
   ctx.drawImage(imgBC,-75,-46,150,92);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,588.5,324.3,587.6,302.3,'#e53935');
+  arrow(ctx,588.7,325.5,587.8,303.5,'#e53935');
 
   roundRect(ctx,638,362,66,48,4,'rgba(26,42,58,0.85)');
   ctx.fillStyle='#90caf9'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
