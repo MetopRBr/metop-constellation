@@ -146,9 +146,7 @@ def patch_html(html, elems, results):
 
     html = re.sub(
         r'  // ── Metop-B at [^\n]* ────────\r?\n'
-        r'  // Phase angle from TLEs: [^\n]*\r?\n'
-        r'  // Parametric angle on ellipse: [^\n]*\r?\n'
-        r'  // Image rotation: [^\n]*\r?\n'
+        r'(?:  //[^\n]*\r?\n)*'
         r'  ctx\.save\(\);\r?\n'
         r'  ctx\.translate\([^)]+\);\r?\n'
         r'  ctx\.rotate\([^)]+\);\r?\n'
@@ -185,10 +183,7 @@ def patch_html(html, elems, results):
 
     html = re.sub(
         r'  // ── Metop-SGA1 — EUMETSAT TLE [^\n]* ─+\r?\n'
-        r'  // TLE epoch [^\n]*\r?\n'
-        r'  // SGA1 AoL [^\n]*\r?\n'
-        r'  // Phase: [^\n]*\r?\n'
-        r'  // Canvas position: [^\n]*\r?\n'
+        r'(?:  //[^\n]*\r?\n)*'
         r'  ctx\.save\(\);\r?\n'
         r'  ctx\.translate\([^)]+\);\r?\n'
         r'  ctx\.rotate\([^)]+\);\r?\n'
