@@ -239,8 +239,8 @@ def patch_html(html, elems, results):
         html
     )
     html = re.sub(
-        r"ctx\.fillText\('Metop-C → SGA1: [\d.]+°', 153, 548\);",
-        f"ctx.fillText('Metop-C → SGA1: {360-sg_phase:.1f}°', 153, 548);",
+        r"ctx\.fillText\('Metop-C to SGA1: [\d.]+°', 153, 548\);",
+        f"ctx.fillText('Metop-C to SGA1: {360-sg_phase:.1f}°', 153, 548);",
         html
     )
 
