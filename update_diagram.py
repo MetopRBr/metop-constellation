@@ -272,17 +272,39 @@ def patch_html(html, elems, results):
     sga1_deg = math.degrees(sga1_rad)
     b_deg    = math.degrees(b_rad)
 
+    # SGA1→B label position: 45° CCW before Metop-B, outside the ellipse
+    label_angle_rad = c_rad + math.radians(b_from_c - 45.0)
+    sga1b_label_x = 350 + (240 + 30) * math.cos(label_angle_rad)
+    sga1b_label_y = 365 + (250 + 30) * math.sin(label_angle_rad)
+
     html = re.sub(
         r'  // ── Orbit arcs \(auto-computed from cumulative phase angle from Metop-C\) ──\n'
-        r'  // C→SGA1: [\d.]+° \| SGA1→B \(grey, unoccupied\): [\d.]+° \| B→C: [\d.]+°\n'
+        r'  // C→SGA1: [\d.]+° \| SGA1→B [^\n]+\n'
         r"  orbitArc\(Math\.PI/2, \([\d.]+ \* Math\.PI / 180\), 'rgba\(255,152,0,0\.65\)', \[3,3\]\);\n"
-        r"  orbitArc\(\([\d.]+ \* Math\.PI / 180\), \([\d.]+ \* Math\.PI / 180\), 'rgba\(102,102,102,0\.18\)', \[3,5\]\);\n"
+        r"  orbitArc\(\([\d.]+ \* Math\.PI / 180\), \([\d.]+ \* Math\.PI / 180\), 'rgba[^']+', \[\d+,\d+\]\);\n"
         r"  orbitArc\(\([\d.]+ \* Math\.PI / 180\), Math\.PI\*2 \+ Math\.PI/2, 'rgba\(255,152,0,0\.65\)', \[3,3\]\);",
         "  // ── Orbit arcs (auto-computed from cumulative phase angle from Metop-C) ──\n"
-        f"  // C→SGA1: {sga1_from_c:.2f}° | SGA1→B (grey, unoccupied): {sga1_to_b_sweep:.2f}° | B→C: {b_phase:.2f}°\n"
+        f"  // C→SGA1: {sga1_from_c:.2f}° | SGA1→B (orange, reserved for SGB1): {sga1_to_b_sweep:.2f}° | B→C: {b_phase:.2f}°\n"
         f"  orbitArc(Math.PI/2, ({sga1_deg:.2f} * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);\n"
-        f"  orbitArc(({sga1_deg:.2f} * Math.PI / 180), ({b_deg:.2f} * Math.PI / 180), 'rgba(102,102,102,0.18)', [3,5]);\n"
+        f"  orbitArc(({sga1_deg:.2f} * Math.PI / 180), ({b_deg:.2f} * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);\n"
         f"  orbitArc(({b_deg:.2f} * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);",
+        html
+    )
+
+    # Arc labels
+    html = re.sub(
+        r"ctx\.fillText\('Metop-B to C: [\d.]+°', 543, 577\);",
+        f"ctx.fillText('Metop-B to C: {b_phase:.1f}°', 543, 577);",
+        html
+    )
+    html = re.sub(
+        r"ctx\.fillText\('Metop-C to SGA1: [\d.]+°', 153, 548\);",
+        f"ctx.fillText('Metop-C to SGA1: {sga1_from_c:.1f}°', 153, 548);",
+        html
+    )
+    html = re.sub(
+        r"ctx\.fillText\('Metop-SGA1 to B: [\d.]+°', [\d.]+, [\d.]+\);",
+        f"ctx.fillText('Metop-SGA1 to B: {sga1_to_b_sweep:.1f}°', {sga1b_label_x:.0f}, {sga1b_label_y:.0f});",
         html
     )
 
