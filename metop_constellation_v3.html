@@ -276,16 +276,7 @@ function draw() {
   ctx.setLineDash([]);
   ctx.restore();
 
-  // Antarctic Circle (66.57°S) — horizontal line at y=483, x=299 to x=401
-  ctx.save();
-  ctx.strokeStyle='rgba(180,220,255,0.55)';
-  ctx.lineWidth=0.8;
-  ctx.setLineDash([3,3]);
-  ctx.beginPath();
-  ctx.moveTo(299,483); ctx.lineTo(401,483);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.restore();
+  // Antarctic Circle (66.57°S) — removed per request
 
   // Svalbard CDA ground station — orthographic projection lon0=10°E (78.22°N, 15.63°E)
   // x=352.6, y=239.7 → top-left (340, 232)
@@ -327,9 +318,7 @@ function draw() {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Polar axis
-  ctx.strokeStyle='rgba(102,102,102,0.3)'; ctx.lineWidth=0.5; ctx.setLineDash([3,6]);
-  ctx.beginPath(); ctx.moveTo(350,40); ctx.lineTo(350,640); ctx.stroke(); ctx.setLineDash([]);
+  // Polar axis labels (line removed)
   ctx.fillStyle='#888'; ctx.font='11px sans-serif'; ctx.textAlign='center';
   ctx.fillText('N',350,32); ctx.fillText('S',350,700);
 
