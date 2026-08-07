@@ -19,9 +19,9 @@ const imgBC     = new Image();
 const imgRadome = new Image();
 let loaded = 0;
 // -- TLE epochs (yyddd.fraction) -- update these when new TLEs are loaded
-const TLE_EPOCH_B    = 26218.29380043;  // Metop-B   (EUMETSAT)
-const TLE_EPOCH_C    = 26218.25192839;  // Metop-C   (EUMETSAT)
-const TLE_EPOCH_SGA1 = 26218.0;  // Metop-SGA1 (EUMETSAT)
+const TLE_EPOCH_B    = 26219.29432057;  // Metop-B   (EUMETSAT)
+const TLE_EPOCH_C    = 26219.25210699;  // Metop-C   (EUMETSAT)
+const TLE_EPOCH_SGA1 = 26219.0;  // Metop-SGA1 (EUMETSAT)
 
 // Convert TLE epoch (yyddd.fraction) to DD/MM/YYYY string
 function tleEpochToDate(epoch) {
@@ -334,33 +334,33 @@ function draw() {
     ctx.strokeStyle=color; ctx.lineWidth=1.2; ctx.setLineDash(dash||[]); ctx.stroke(); ctx.setLineDash([]);
   }
   // ── Orbit arcs (auto-computed from cumulative phase angle from Metop-C) ──
-  // C→SGA1: 174.01° | SGA1→B (orange, reserved for SGB1): 99.87° | B→C: 86.12°
-  orbitArc(Math.PI/2, (264.01 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((264.01 * Math.PI / 180), (363.88 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((363.88 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
+  // C→SGA1: 174.02° | SGA1→B (orange, reserved for SGB1): 100.07° | B→C: 85.91°
+  orbitArc(Math.PI/2, (264.02 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((264.02 * Math.PI / 180), (364.09 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((364.09 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
 
   // Arc labels — positioned outside ellipse
   // B→C label at bottom-right
   ctx.fillStyle='#ff9800'; ctx.font='11px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Metop-B to C: 86.1°', 543, 577);
+  ctx.fillText('Metop-B to C: 85.9°', 543, 577);
   // C→SGA1 label at bottom-left
   ctx.fillText('Metop-C to SGA1: 174.0°', 153, 548);
   // SGA1→B label: 45° CCW from Metop-B, dynamically computed — reserved for Metop-SGB1 drift-in
-  ctx.fillText('Metop-SGA1 to B: 99.9°', 553, 181);
+  ctx.fillText('Metop-SGA1 to B: 100.1°', 554, 182);
 
 
-  // ── Metop-SGA1 — EUMETSAT TLE (06/08/2026) ─────────────────────────────
-  // TLE epoch 26218.0, propagated to common epoch 26218.29380043
-  // SGA1 AoL 28.32deg, Metop-C AoL 202.33deg
-  // Phase: 185.99deg CCW ahead of Metop-C (= 174.01deg behind C), drifting toward lead
-  // Canvas position: (325.0, 116.4), rotation: -0.1045 rad (-5.99deg)
+  // ── Metop-SGA1 — EUMETSAT TLE (07/08/2026) ─────────────────────────────
+  // TLE epoch 26219.0, propagated to common epoch 26219.29432057
+  // SGA1 AoL 105.51deg, Metop-C AoL 279.53deg
+  // Phase: 185.98deg CCW ahead of Metop-C (= 174.02deg behind C), drifting toward lead
+  // Canvas position: (325.0, 116.4), rotation: -0.1044 rad (-5.98deg)
   ctx.save();
   ctx.translate(325.0, 116.4);
-  ctx.rotate(-0.1045);
+  ctx.rotate(-0.1044);
   ctx.drawImage(imgSGA1,-75,-45,150,91);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,295.1,119.5,273.2,121.8,'#e53935');
+  arrow(ctx,295.2,119.5,273.3,121.8,'#e53935');
 
   roundRect(ctx,264,186,122,34,4,'rgba(26,42,26,0.85)');
   ctx.fillStyle='#a5d6a7'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
@@ -368,17 +368,17 @@ function draw() {
   ctx.fillStyle='#81c784'; ctx.font='11px sans-serif';
   ctx.fillText('2nd gen · Commissioning',325,214);
 
-  // ── Metop-B at 86.12° ahead of Metop-C (TLE-derived, 06/08/2026) ────────
-  // Phase angle from TLEs: B is 86.12° CCW ahead of C (at 6 o'clock)
-  // Parametric angle on ellipse: 3.88° → canvas position (~589, 382)
-  // Image rotation: π/2 + angle = 1.6385 rad (93.88°)
+  // ── Metop-B at 85.91° ahead of Metop-C (TLE-derived, 07/08/2026) ────────
+  // Phase angle from TLEs: B is 85.91° CCW ahead of C (at 6 o'clock)
+  // Parametric angle on ellipse: 4.09° → canvas position (~589, 383)
+  // Image rotation: π/2 + angle = 1.6421 rad (94.09°)
   ctx.save();
-  ctx.translate(589.5,381.9);
-  ctx.rotate(1.6385);
+  ctx.translate(589.4,382.8);
+  ctx.rotate(1.6421);
   ctx.drawImage(imgBC,-75,-46,150,92);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,591.5,352.0,593.0,330.0,'#e53935');
+  arrow(ctx,591.5,352.9,593.1,330.9,'#e53935');
 
   roundRect(ctx,638,362,66,48,4,'rgba(26,42,58,0.85)');
   ctx.fillStyle='#90caf9'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
