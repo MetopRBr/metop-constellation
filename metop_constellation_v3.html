@@ -19,9 +19,9 @@ const imgBC     = new Image();
 const imgRadome = new Image();
 let loaded = 0;
 // -- TLE epochs (yyddd.fraction) -- update these when new TLEs are loaded
-const TLE_EPOCH_B    = 26325.29397841;  // Metop-B   (EUMETSAT)
-const TLE_EPOCH_C    = 26325.25212337;  // Metop-C   (EUMETSAT)
-const TLE_EPOCH_SGA1 = 26325.0;  // Metop-SGA1 (EUMETSAT)
+const TLE_EPOCH_B    = 26326.29388597;  // Metop-B   (EUMETSAT)
+const TLE_EPOCH_C    = 26326.25204609;  // Metop-C   (EUMETSAT)
+const TLE_EPOCH_SGA1 = 26326.0;  // Metop-SGA1 (EUMETSAT)
 
 // Convert TLE epoch (yyddd.fraction) to DD/MM/YYYY string
 function tleEpochToDate(epoch) {
@@ -334,24 +334,24 @@ function draw() {
     ctx.strokeStyle=color; ctx.lineWidth=1.2; ctx.setLineDash(dash||[]); ctx.stroke(); ctx.setLineDash([]);
   }
   // ── Orbit arcs (auto-computed from cumulative phase angle from Metop-C) ──
-  // C→SGA1: 175.49° | SGA1→B (orange, reserved for SGB1): 109.85° | B→C: 74.65°
+  // C→SGA1: 175.49° | SGA1→B (orange, reserved for SGB1): 109.87° | B→C: 74.64°
   orbitArc(Math.PI/2, (265.49 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((265.49 * Math.PI / 180), (375.35 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((375.35 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((265.49 * Math.PI / 180), (375.36 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((375.36 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
 
   // Arc labels — positioned outside ellipse
   // B→C label at bottom-right
   ctx.fillStyle='#ff9800'; ctx.font='11px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Metop-B to C: 74.7°', 543, 577);
+  ctx.fillText('Metop-B to C: 74.6°', 543, 577);
   // C→SGA1 label at bottom-left
   ctx.fillText('Metop-C to SGA1: 175.5°', 153, 548);
   // SGA1→B label: 45° CCW from Metop-B, dynamically computed — reserved for Metop-SGB1 drift-in
-  ctx.fillText('Metop-SGA1 to B: 109.9°', 585, 226);
+  ctx.fillText('Metop-SGA1 to B: 109.9°', 585, 227);
 
 
-  // ── Metop-SGA1 — EUMETSAT TLE (21/11/2026) ─────────────────────────────
-  // TLE epoch 26325.0, propagated to common epoch 26325.29397841
-  // SGA1 AoL 76.82deg, Metop-C AoL 252.31deg
+  // ── Metop-SGA1 — EUMETSAT TLE (22/11/2026) ─────────────────────────────
+  // TLE epoch 26326.0, propagated to common epoch 26326.29388597
+  // SGA1 AoL 150.78deg, Metop-C AoL 326.27deg
   // Phase: 184.51deg CCW ahead of Metop-C (= 175.49deg behind C), drifting toward lead
   // Canvas position: (331.1, 115.8), rotation: -0.0787 rad (-4.51deg)
   ctx.save();
@@ -368,17 +368,17 @@ function draw() {
   ctx.fillStyle='#81c784'; ctx.font='11px sans-serif';
   ctx.fillText('2nd gen · Commissioning',331,214);
 
-  // ── Metop-B at 74.65° ahead of Metop-C (TLE-derived, 21/11/2026) ────────
-  // Phase angle from TLEs: B is 74.65° CCW ahead of C (at 6 o'clock)
-  // Parametric angle on ellipse: 15.35° → canvas position (~581, 431)
-  // Image rotation: π/2 + angle = 1.8387 rad (105.35°)
+  // ── Metop-B at 74.64° ahead of Metop-C (TLE-derived, 22/11/2026) ────────
+  // Phase angle from TLEs: B is 74.64° CCW ahead of C (at 6 o'clock)
+  // Parametric angle on ellipse: 15.36° → canvas position (~581, 431)
+  // Image rotation: π/2 + angle = 1.8389 rad (105.36°)
   ctx.save();
   ctx.translate(581.4,431.2);
-  ctx.rotate(1.8387);
+  ctx.rotate(1.8389);
   ctx.drawImage(imgBC,-75,-46,150,92);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,589.4,402.2,595.2,381.0,'#e53935');
+  arrow(ctx,589.4,402.3,595.2,381.1,'#e53935');
 
   roundRect(ctx,638,362,66,48,4,'rgba(26,42,58,0.85)');
   ctx.fillStyle='#90caf9'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
