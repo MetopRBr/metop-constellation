@@ -19,9 +19,9 @@ const imgBC     = new Image();
 const imgRadome = new Image();
 let loaded = 0;
 // -- TLE epochs (yyddd.fraction) -- update these when new TLEs are loaded
-const TLE_EPOCH_B    = 26328.29390609;  // Metop-B   (EUMETSAT)
-const TLE_EPOCH_C    = 26328.25211443;  // Metop-C   (EUMETSAT)
-const TLE_EPOCH_SGA1 = 26328.0;  // Metop-SGA1 (EUMETSAT)
+const TLE_EPOCH_B    = 26329.29387275;  // Metop-B   (EUMETSAT)
+const TLE_EPOCH_C    = 26329.25201868;  // Metop-C   (EUMETSAT)
+const TLE_EPOCH_SGA1 = 26329.0;  // Metop-SGA1 (EUMETSAT)
 
 // Convert TLE epoch (yyddd.fraction) to DD/MM/YYYY string
 function tleEpochToDate(epoch) {
@@ -334,10 +334,10 @@ function draw() {
     ctx.strokeStyle=color; ctx.lineWidth=1.2; ctx.setLineDash(dash||[]); ctx.stroke(); ctx.setLineDash([]);
   }
   // ── Orbit arcs (auto-computed from cumulative phase angle from Metop-C) ──
-  // C→SGA1: 175.48° | SGA1→B (orange, reserved for SGB1): 109.89° | B→C: 74.62°
+  // C→SGA1: 175.48° | SGA1→B (orange, reserved for SGB1): 109.91° | B→C: 74.61°
   orbitArc(Math.PI/2, (265.48 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((265.48 * Math.PI / 180), (375.38 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
-  orbitArc((375.38 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((265.48 * Math.PI / 180), (375.39 * Math.PI / 180), 'rgba(255,152,0,0.65)', [3,3]);
+  orbitArc((375.39 * Math.PI / 180), Math.PI*2 + Math.PI/2, 'rgba(255,152,0,0.65)', [3,3]);
 
   // Arc labels — positioned outside ellipse
   // B→C label at bottom-right
@@ -349,18 +349,18 @@ function draw() {
   ctx.fillText('Metop-SGA1 to B: 109.9°', 585, 227);
 
 
-  // ── Metop-SGA1 — EUMETSAT TLE (24/11/2026) ─────────────────────────────
-  // TLE epoch 26328.0, propagated to common epoch 26328.29390609
-  // SGA1 AoL 299.74deg, Metop-C AoL 115.23deg
+  // ── Metop-SGA1 — EUMETSAT TLE (25/11/2026) ─────────────────────────────
+  // TLE epoch 26329.0, propagated to common epoch 26329.29387275
+  // SGA1 AoL 14.00deg, Metop-C AoL 189.48deg
   // Phase: 184.52deg CCW ahead of Metop-C (= 175.48deg behind C), drifting toward lead
-  // Canvas position: (331.1, 115.8), rotation: -0.0788 rad (-4.52deg)
+  // Canvas position: (331.1, 115.8), rotation: -0.0789 rad (-4.52deg)
   ctx.save();
   ctx.translate(331.1, 115.8);
-  ctx.rotate(-0.0788);
+  ctx.rotate(-0.0789);
   ctx.drawImage(imgSGA1,-75,-45,150,91);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
-  arrow(ctx,301.2,118.1,279.3,119.9,'#e53935');
+  arrow(ctx,301.2,118.1,279.2,119.9,'#e53935');
 
   roundRect(ctx,270,186,122,34,4,'rgba(26,42,26,0.85)');
   ctx.fillStyle='#a5d6a7'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
@@ -368,13 +368,13 @@ function draw() {
   ctx.fillStyle='#81c784'; ctx.font='11px sans-serif';
   ctx.fillText('2nd gen · Commissioning',331,214);
 
-  // ── Metop-B at 74.62° ahead of Metop-C (TLE-derived, 24/11/2026) ────────
-  // Phase angle from TLEs: B is 74.62° CCW ahead of C (at 6 o'clock)
-  // Parametric angle on ellipse: 15.38° → canvas position (~581, 431)
-  // Image rotation: π/2 + angle = 1.8392 rad (105.38°)
+  // ── Metop-B at 74.61° ahead of Metop-C (TLE-derived, 25/11/2026) ────────
+  // Phase angle from TLEs: B is 74.61° CCW ahead of C (at 6 o'clock)
+  // Parametric angle on ellipse: 15.39° → canvas position (~581, 431)
+  // Image rotation: π/2 + angle = 1.8394 rad (105.39°)
   ctx.save();
-  ctx.translate(581.4,431.3);
-  ctx.rotate(1.8392);
+  ctx.translate(581.4,431.4);
+  ctx.rotate(1.8394);
   ctx.drawImage(imgBC,-75,-46,150,92);
   ctx.restore();
   // Arrow in direction of travel (CCW tangent at this position)
@@ -386,7 +386,7 @@ function draw() {
   ctx.fillStyle='#64b5f6'; ctx.font='11px sans-serif';
   ctx.fillText('Prime',671,390);
   ctx.fillStyle='#90caf9'; ctx.font='10px sans-serif';
-  ctx.fillText('LTAN 21:06',671,403);
+  ctx.fillText('LTAN 21:05',671,403);
 
   // ── Metop-C at 6 o'clock (350,615) ──────────────────────
   // BC image 150x92, rotate 180°, horiz 275–425, vert 569–661
